@@ -8,7 +8,9 @@ package com.songguoliang.demo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -123,10 +125,85 @@ public class MyFile {
 			}
 		}
 		
-		
+	}
+	/**
+	 * FileOutputStream类
+	 * @date 2014年11月11日 下午4:40:53
+	 * @author sgl
+	 */
+	@Test
+	public void test5(){
+		FileInputStream fis=null;
+		FileOutputStream fos=null;
+		try {
+			//创建字节输入流
+			fis=new FileInputStream("FileInputStreamTest.txt");
+			//创建字节输出流
+			fos=new FileOutputStream("newFile.txt");
+			byte[]bbuf=new byte[32];
+			int hasRead=0;
+			while((hasRead=fis.read(bbuf))>0){
+				//每读一次，即写入文件输出流，读了多少就写多少
+				fos.write(bbuf,0,hasRead);
+			}
+			System.out.println("复制完毕！");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(fis!=null){
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(fos!=null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 	}
-	
+	/**
+	 * FileWrite类
+	 * @date 2014年11月11日 下午4:59:17
+	 * @author sgl
+	 */
+	@Test
+	public void test6(){
+		FileWriter fw=null;
+		FileReader fr=null;
+		try {
+			fr=new FileReader("FileInputStreamTest.txt");
+			fw=new FileWriter("newFile.txt");
+			char[]c=new char[32];
+			int hasRead=0;
+			while((hasRead=fr.read(c))>0){
+				fw.write(c,0,hasRead);
+				fw.write("测试");
+			}
+			fw.write("锦瑟 - 李商隐\r\n");
+			fw.write("锦瑟无端五十弦，一弦一柱思华年。\r\n");
+			fw.write("庄生晓梦迷蝴蝶，望帝春心托杜鹃。\r\n");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			if(fw!=null){
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 	
 	
 	
